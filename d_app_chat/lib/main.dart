@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:d_app_chat/config/theme/app_theme.dart';  
 
 void main() {
   runApp(const MyApp());
@@ -13,6 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Rosta Chat',
       debugShowCheckedModeBanner: false,
+      theme: AppTheme(selector: 4).theme(),
       home: Scaffold(
         appBar: AppBar(
           title: Text('Rosta Chat'),
