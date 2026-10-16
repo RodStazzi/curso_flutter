@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:d_app_chat/config/theme/app_theme.dart';  
-
 import 'package:d_app_chat/routes/routes.dart';
-import 'package:get/get.dart';
+//import 'package:get/get.dart';
+import 'package:provider/provider.dart';
+import 'package:d_app_chat/providers/chat_provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,12 +32,17 @@ class MyApp extends StatelessWidget {
   // }
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ChatProvider()),
+      ],
+      child: MaterialApp(
       title: 'Rosta Chat',
       debugShowCheckedModeBanner: false,
       theme: AppTheme(selector: 4).theme(),
       initialRoute: AppRoutes.initialRoute,
-      getPages: AppRoutes.pages
+      routes: AppRoutes.pages,
+        )
     );
   }
 }

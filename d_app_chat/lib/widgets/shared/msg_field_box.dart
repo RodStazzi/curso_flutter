@@ -7,8 +7,12 @@ class MsgFieldBox extends StatelessWidget {
   Widget build(BuildContext context) {
 
 final colors = Theme.of(context).colorScheme;
+final textController = TextEditingController();
+final focusNode = FocusNode();
 
     return TextFormField(
+      focusNode: focusNode,
+      controller: textController,
       decoration: InputDecoration(
         hintText: 'Type a message...',
         border: OutlineInputBorder(
@@ -26,10 +30,22 @@ final colors = Theme.of(context).colorScheme;
         suffixIcon: IconButton(
           icon: Icon(Icons.send, color: colors.primary),
           onPressed: () {
-            print("");
+            final text = textController.text;
+            textController.clear();
+            print("send : $text");
+            focusNode.requestFocus();
           },
         ),
+        contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       ),
+      onFieldSubmitted: (value) {
+        print('onFieldSubmitted: $value');
+        textController.clear();
+        focusNode.requestFocus();
+      },
+      onChanged: (value) {
+        print('onChanged: $value');
+      },
     );
   }
 }

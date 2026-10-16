@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+//import 'package:get/get.dart';
 import 'package:d_app_chat/widgets/chats/msg_bubble.dart';
 import 'package:d_app_chat/widgets/chats/other_msg_bubble.dart';
 import 'package:d_app_chat/widgets/shared/msg_field_box.dart';
@@ -15,7 +15,7 @@ class ChatScreen extends StatelessWidget {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            Get.back();
+            Navigator.pop(context);
           },
         ),
         centerTitle: false,
