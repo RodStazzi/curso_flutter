@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:d_app_chat/widgets/chats/msg_bubble.dart';
 import 'package:d_app_chat/widgets/chats/other_msg_bubble.dart';
 import 'package:d_app_chat/widgets/shared/msg_field_box.dart';
+import 'package:d_app_chat/providers/chat_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:d_app_chat/domain/entities/msg.dart';
 
 class ChatScreen extends StatelessWidget {
   const ChatScreen({super.key});
@@ -36,25 +39,33 @@ class ChatScreen extends StatelessWidget {
 }
 
 class _ChatBody extends StatelessWidget {
+  _ChatBody();
+
   @override
   Widget build(BuildContext context) {
+    final chatProvider = context.watch<ChatProvider>();
+    final msgs = chatProvider.msg;
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Column(
           children: [
             Expanded(
-        child: ListView.builder(
-          itemCount: 100,
-          itemBuilder: (context, index) {
-            return index % 2 == 0 ? MsgBubble() : OtherMsgBubble();
-          },
-        ),
+              child: ListView.builder(
+                controller: chatProvider.scrollController,
+                itemCount: msgs.length,
+                itemBuilder: (context, index) {
+                  final msg = msgs[index];
+                  return (msg.who == Who.me)
+                      ? MsgBubble(msg: msg, date: msg.date.toLocal())
+                      : OtherMsgBubble(msg: msg, date: msg.date.toLocal());
+                },
+              ),
             ),
-            MsgFieldBox()
+            MsgFieldBox(),
           ],
         ),
-      )
+      ),
     );
   }
 }
